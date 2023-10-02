@@ -197,7 +197,7 @@ function App() {
               color={"gray.200"}
               border="0"
             >
-              @동화 (usona@kakao.com)
+              @동화 (hongzoeeee@gmail.com)
             </PopoverFooter>
           </PopoverContent>
         </Popover>
