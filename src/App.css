@@ -1,126 +1,168 @@
-/* 전체 화면 가운데 정렬 */
-html,
-body {
-  height: 100%;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: Arial, sans-serif;
+/* App.css */
+
+* {
+  font-family: Pretendard-Regular;
 }
 
 .container {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  text-align: center;
-  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  background-color: #f0f0f0;
 }
 
 .calculator {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 2px solid #333;
-  border-radius: 8px;
-  padding: 20px;
-  background-color: #f8f8f8;
+  background-color: #fff;
+  border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  width: 300px;
-  margin-bottom: 6px;
+  padding: 20px;
+  text-align: center;
+  max-width: 430px;
+  width: 100%;
+  overflow: hidden; /* 계산 기록이 넘칠 경우 스크롤바 표시 */
 }
-
-/* .input-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-} */
 
 input[type="text"] {
-  width: 100px;
+  width: 85px;
+  height: 40px;
   padding: 5px;
-  font-size: 16px;
+  margin: 5px;
   text-align: center;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  margin: 0 10px;
+  border-radius: 3px;
+  outline: none;
+  font-family: Pretendard-Regular !important;
 }
 
-.buttons {
-  display: flex;
-  flex-direction: row;
-  margin: 10px 0px;
-}
-
-.number-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  margin-right: 20px;
-}
-
-.number-button {
-  background-color: #ffa3c0;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 5px 10px;
-  font-size: 16px;
+.button-operator {
+  padding: 10px 20px;
+  font-size: 20px !important;
   margin: 5px;
+  background-color: #ccccff !important;
+  color: #fff !important;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  align-items: center;
+  font-family: Pretendard-Regular !important;
+}
+
+.button-operator:hover {
+  background-color: #9999ff !important;
+}
+
+.button-clear {
+  padding: 10px 20px;
+  font-size: 18px;
+  margin: 5px;
+  background-color: #ff5252 !important;
+  color: #fff !important;
+  border: none;
+  border-radius: 3px;
   cursor: pointer;
 }
 
-.number-button:hover {
-  background-color: #ee739e;
+.button-clear:hover {
+  background-color: #ff1744 !important;
 }
 
-.operation-buttons {
-  display: flex;
-  flex-direction: column;
+input[type="text"][readonly] {
+  background-color: #f0f0f0;
+  border: none;
+  font-family: Pretendard-Regular !important;
 }
 
-.operation-button {
-  background-color: #6a3a62;
+.history-container {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  max-height: 200px !important ;
+  overflow-y: auto; /* 스크롤바 표시 */
+}
+
+.history-container h3 {
+  margin-top: 0;
+  font-size: 16px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  max-height: 200px !important;
+}
+
+li {
+  margin: 5px 0;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* 긴 계산 기록은 생략 부호 (...) 표시 */
+}
+
+.info-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #007bff;
   color: #fff;
   border: none;
-  border-radius: 4px;
-  padding: 5px 10px;
-  font-size: 16px;
-  margin: 5px;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.operation-button:hover {
+.info-icon:hover {
   background-color: #0056b3;
 }
 
-.clear-button {
-  background-color: #ffeaff;
-  border: none;
-  margin-top: 4px;
-  height: 68px;
-}
-
-.clear-button:hover {
-  background-color: #ffeaff;
-}
-
-.history {
-  max-height: 200px;
+.info-slide {
+  position: absolute;
+  top: 0;
+  right: -300px; /* 초기에 숨겨져 있도록 설정 */
+  width: 300px;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: -3px 0px 5px rgba(0, 0, 0, 0.2);
   overflow-y: auto;
-  text-align: left;
-  margin-top: 20px;
-  width: 100%;
+  transition: right 0.3s ease;
+  z-index: 2;
 }
 
-.history ul {
-  list-style-type: none;
-  padding: 0;
+.info-slide.active {
+  right: 0; /* 슬라이드 활성화 시 표시되도록 설정 */
 }
 
-.history li {
-  margin: 5px 0;
-  font-size: 14px;
-  color: #555;
+.close-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.close-icon:hover {
+  background-color: #d80000;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column-reverse; /* 수직으로 요소를 배치 */
+    align-items: flex-start; /* 좌측 정렬 */
+  }
+  .info_trigger {
+    margin-bottom: 0px !important;
+  }
 }
